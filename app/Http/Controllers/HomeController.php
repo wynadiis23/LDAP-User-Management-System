@@ -249,4 +249,26 @@ class HomeController extends Controller
             }
         }
     }
+    public function sinkronisasi(){
+        return view('home.sinkronisasi');
+    }
+    public function getSinkronisasi(){
+        $ldap_server = "ldaps://192.168.1.3:636";
+        $ldap_dn = "dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id";
+        $ldap_user = "cn=admin,".$ldap_dn;
+        $ldap_password = "password";
+
+        $ldap_conn = ldap_connect($ldap_server);
+        ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+
+        if($ldap_conn){
+            $ldap_bind = ldap_bind($ldap_conn, $ldap_user, $ldap_password);
+            if($ldap_bind){
+                $result = ldap_search($ldap_conn, $ldap_dn, "(cn=moodleuser*)");
+                $data = ldap_get_entries($ldap_conn, $result);
+
+                dd($data);
+            }
+        }
+    }
 }

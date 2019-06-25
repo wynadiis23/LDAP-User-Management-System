@@ -89,7 +89,7 @@
 		                            <form action="{{route('home.destroy', ['id'=>$hasil[$i]["cn"][0]])}}" class="d-inline" onsubmit="return confirm('Hapus User?')" method="POST">
 		                                @csrf
 		                                <input type="hidden" name="_method" value="DELETE">
-		                                <input type="submit" value="Trash" class="btn btn-danger btn-xsm">
+		                                <input type="submit" value="Hapus" class="btn btn-danger btn-xsm">
 		                            </form>
 				                </td>
 				            </tr>

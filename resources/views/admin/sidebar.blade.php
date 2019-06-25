@@ -31,9 +31,11 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="{{route ('home.create')}}"><i class="fa fa-plus"></i> <span>Tambah User</span></a></li>
         <li><a href="{{route ('cari')}}"><i class="fa fa-search"></i> <span>Cari User</span></a></li>
+        <li><a href="{{route ('sinkronisasi')}}"><i class="fa fa-refresh"></i> <span>Sinkronisasi</span></a></li>
+        <li><a href="{{route ('cari')}}"><i class="fa fa-info"></i> <span>Info Server</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">

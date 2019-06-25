@@ -27,6 +27,8 @@ Route::post('cekLogin', 'CekLoginController@index')->name('cekLogin');
 
 Route::get('cari', 'HomeController@cari')->name('cari');
 Route::post('letscari', 'HomeController@letsCari')->name('letscari');
+Route::get('sinkronisasi', 'HomeController@sinkronisasi')->name('sinkronisasi');
+Route::get('getSinkronisasi', 'HomeController@getSinkronisasi')->name('getSinkronisasi');
 //route resource//
 Route::resource('home', 'HomeController');
 

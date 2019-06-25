@@ -20,11 +20,11 @@
                     <form action="{{route ('home.update', ['id'=>$hasil[$i]["cn"][0]])}}" method="post" enctype="multipart/form-data">
                     	@csrf
                     	<input type="hidden" value="PUT" name="_method">
-                    	<label>uid</label>
+                    	<label>NIM/NIP</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="uid" value="{{$hasil[$i]["uid"][0]}}" />
                         <!-- <label>posixGroup</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixGroup" /> -->
-                        <label>posixGroup</label>
+                        <label>Fakultas</label>
                         <select class="form-control input-sm" name="posixGroup">
                         	<option>moodleuser</option>
                         </select>
@@ -33,9 +33,9 @@
                         <input type='hidden' placeholder='uid' class='form-control input-sm' name="userDN" value="{{$hasil[$i]['dn']}}" />
                         <label>Base DN</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="baseDN" value="dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id" disabled />
-                        <label>CN</label>
+                        <label>Username</label>
                         <input type='text' placeholder='common name' class='form-control input-sm' name="CN" value="{{$hasil[$i]["cn"][0]}}" disabled />
-                        <label>SN</label>
+                        <label>Nama Lengkap</label>
                         <input type='text' placeholder='sur name' class='form-control input-sm' name="SN" value="{{$hasil[$i]["sn"][0]}}" />
                         <label>Login Shell</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="loginShell" value="/bin/sh" disabled />
