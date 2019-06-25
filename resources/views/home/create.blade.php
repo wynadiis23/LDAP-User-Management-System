@@ -36,20 +36,20 @@
                         <input type='text' placeholder='uid' class='form-control input-sm' name="loginShell" value="/bin/sh" disabled />
                         <input type='hidden' placeholder='uid' class='form-control input-sm' name="loginShell" value="/bin/sh" />
                         <label>uid Number</label>
-                        <input type='text' placeholder='uid number mengikuti posixGroup' class='form-control input-sm' name="uid" disabled />
+                        <input type='text' placeholder='uid number random 2000:50000' class='form-control input-sm' name="uid" disabled />
                         <label>gid Number</label>
                         <input type='text' placeholder='gid number mengikuti posixGroup' class='form-control input-sm' name="gid" disabled />
                         <!-- <label>Home Directory</label>
                         <input type='text' placeholder='/home/cn+sn atau /home/uid' class='form-control input-sm' name="homeDir" /> -->
                         <label>Object Class</label>
-                        <input type='text' placeholder='uid' class='form-control input-sm' name="inetOrgPerson" value="inetOrgPerson" disabled />
+                        <input type='text' placeholder='uid' class='form-control input-sm' name="inetOrgPerson" value="top" disabled />
                         <input type='hidden' placeholder='uid' class='form-control input-sm' name="inetOrgPerson" value="inetOrgPerson" />
                         <label>Object Class</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixAccount" value="posixAccount" disabled />
                         <input type='hidden' placeholder='uid' class='form-control input-sm' name="posixAccount" value="posixAccount" />
                         <label>Object Class</label>
-                        <input type='text' placeholder='uid' class='form-control input-sm' name="shadowAccount" value="shadowAccount" disabled />
-                        <input type='hidden' placeholder='uid' class='form-control input-sm' name="shadowAccount" value="shadowAccount" />
+                        <input type='text' placeholder='uid' class='form-control input-sm' name="shadowAccount" value="inetOrgPerson" disabled />
+                        <input type='hidden' placeholder='uid' class='form-control input-sm' name="shadowAccount" value="inetOrgPerson" />
                         <label>Password</label>
                         <input type='password' placeholder='password' class='form-control input-sm' name="password" />
 						<br>
