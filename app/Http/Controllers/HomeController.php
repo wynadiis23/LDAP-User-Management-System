@@ -161,7 +161,7 @@ class HomeController extends Controller
             if($ldap_bind){
                 $ldap_update_dn = $request->get('userDN');
                 // dd($ldap_update_dn);    
-                $ldapupdates['uid'] = $request->get('uid');
+                // $ldapupdates['uid'] = $request->get('uid');
 
                 $ldapupdates['sn'] = $request->get('SN');
                 

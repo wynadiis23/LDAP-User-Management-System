@@ -21,7 +21,7 @@
                     	@csrf
                     	<input type="hidden" value="PUT" name="_method">
                     	<label>NIM/NIP</label>
-                        <input type='text' placeholder='uid' class='form-control input-sm' name="uid" value="{{$hasil[$i]["uid"][0]}}" />
+                        <input type='text' placeholder='uid' class='form-control input-sm' name="uid" value="{{$hasil[$i]["uid"][0]}}" disabled />
                         <!-- <label>posixGroup</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixGroup" /> -->
                         <label>Fakultas</label>

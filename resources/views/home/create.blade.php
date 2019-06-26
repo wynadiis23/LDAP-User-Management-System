@@ -72,6 +72,7 @@
                     A separate section to add any kind of widget. Feel free
                     to explore all of AdminLTE widgets by visiting the demo page
                     on <a href="https://almsaeedstudio.com">Almsaeed Studio</a>.
+                    
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
