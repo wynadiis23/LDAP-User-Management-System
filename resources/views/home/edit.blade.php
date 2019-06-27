@@ -25,7 +25,7 @@
                         <!-- <label>posixGroup</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixGroup" /> -->
                         <label>Fakultas</label>
-                        <select class="form-control input-sm" name="posixGroup">
+                        <select class="form-control input-sm" name="posixGroup" disabled>
                         	<option>moodleuser</option>
                         </select>
                         <label>User DN</label>

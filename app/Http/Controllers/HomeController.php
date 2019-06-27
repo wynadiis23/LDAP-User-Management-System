@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GH;
 
 class HomeController extends Controller
 {
@@ -27,7 +28,8 @@ class HomeController extends Controller
     public function create()
     {
         //
-        return view('home.create');
+        $lastUID = GH::lastUID()+1;
+        return view('home.create',['lastUID'=>$lastUID]);
     }
 
     /**
@@ -46,7 +48,7 @@ class HomeController extends Controller
         $ldap_conn = ldap_connect($ldap_server);
         ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
         $ldap_base = "dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id";
-
+        $lastUID = GH::lastUID();
         if(ldap_bind($ldap_conn, $ldap_dn, $ldap_password)){
             
             $ldaprecord['cn'] = $request->get('CN');
@@ -63,7 +65,7 @@ class HomeController extends Controller
             
             $posix = $request->get('posixGroup');
             if($posix == 'moodleuser'){
-                $ldaprecord['uidnumber'] = rand(2000, 50000);
+                $ldaprecord['uidnumber'] = $lastUID+1;
                 $ldaprecord['gidnumber'] = 2000;
                 // echo "moodleuser";
             }
@@ -260,17 +262,22 @@ class HomeController extends Controller
 
         $uidnumber = [];
         $x = [];
-
+        $var = "objectclass=posixAccount";
         $ldap_conn = ldap_connect($ldap_server);
         ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
 
         if($ldap_conn){
             $ldap_bind = ldap_bind($ldap_conn, $ldap_user, $ldap_password);
             if($ldap_bind){
+                $lastUID = GH::lastUID();
+                echo $lastUID;
 
                 //sorting berdasarkan tipe objek class
-                $result = ldap_search($ldap_conn, $ldap_dn, "(objectclass=posixAccount)");
-                $data = ldap_get_entries($ldap_conn, $result);
+
+                //aaa
+                // $result = ldap_search($ldap_conn, $ldap_dn, "(objectclass=posixAccount)");
+                // $data = ldap_get_entries($ldap_conn, $result);
+                //aaa
                 //sorting berdasarkan cn dan uidnumber low to high
                 // for ($i=0; $i<$data["count"]; $i++) {
                 //     if($data[$i]["dn"] == "cn=".$data[$i]["cn"][0].","."cn=moodleuser,dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id"){
@@ -284,16 +291,18 @@ class HomeController extends Controller
                 // echo $a;
                 // dd($uidnumber[$a]);
 
-                for ($i=0; $i<$data["count"]; $i++) {
-                    array_push($uidnumber, $data[$i]["uidnumber"][0]);
+                // for ($i=0; $i<$data["count"]; $i++) {
+                //     array_push($uidnumber, $data[$i]["uidnumber"][0]);
                     
-                    // dd($data);
-                }
-                $a = count($uidnumber)-1;
-                sort($uidnumber);
+                //     // dd($data);
+                // }
+                // $a = count($uidnumber)-1;
+                // sort($uidnumber);
+
+
                 // echo $a;
-                return $this->lastUID();
-                dd($uidnumber[$a]);
+                // return $this->lastUID();
+                // dd($uidnumber[$a]);
                 
 
             }
