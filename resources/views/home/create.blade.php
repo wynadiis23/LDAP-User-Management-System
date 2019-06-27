@@ -72,6 +72,11 @@
                     A separate section to add any kind of widget. Feel free
                     to explore all of AdminLTE widgets by visiting the demo page
                     on <a href="https://almsaeedstudio.com">Almsaeed Studio</a>.
+                    <p>
+                        <b>NIM/NIP</b> isikan sesuai dengan NIM mahasiswa atau NIP Dosen/Pegawai. <br>
+                        <b>Fakultas</b> sesuaikan dengan fakultas mahasiswa atau dosen/pegawai. <br>
+                        
+                    </p>
                     
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
