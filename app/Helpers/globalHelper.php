@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use GH;
+use GuzzleHttp\Client;
 
 class globalHelper{
 	public static function lastUID(){
@@ -51,6 +52,36 @@ class globalHelper{
             }
         }
     }	
+
+    public static function getDataUserAPI(){
+        $client = new Client();
+        $res = $client->get('http://127.0.0.1:8000/getUser');
+
+
+        $result = $res->getBody();
+        return $result;
+    }
+
+    public static function decrypt($string){
+        $encrypt_method = "AES-256-CBC";
+        $secret_key = 'cs.unud.ac.id';
+        $secret_iv = 'cs.unud.ac.id';
+
+         // hash
+        $key = hash('sha256', $secret_key);
+        
+        // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+        $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+        return $output;
+    }
+
+    public static function setFlagSync(){
+        $client = new Client();
+        
+        $res = $client->get('http://127.0.0.1:8000/setFlag');        
+    }
 
 }
 

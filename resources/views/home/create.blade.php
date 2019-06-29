@@ -32,10 +32,10 @@
                         <input type='text' placeholder='common name' class='form-control input-sm' name="CN" />
                         <label>Nama Lengkap</label>
                         <input type='text' placeholder='sur name' class='form-control input-sm' name="SN" />
-                        <!-- <label>Login Shell</label>
+                        <label>Login Shell</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="loginShell" value="/bin/sh" disabled />
                         <input type='hidden' placeholder='uid' class='form-control input-sm' name="loginShell" value="/bin/sh" />
-                        <label>uid Number</label>
+                        <!-- <label>uid Number</label>
                         <input type='text' placeholder='{{$lastUID}}' class='form-control input-sm' name="uid" disabled />
                         <label>gid Number</label>
                         <input type='text' placeholder='gid number mengikuti posixGroup' class='form-control input-sm' name="gid" disabled /> -->

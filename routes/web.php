@@ -23,6 +23,12 @@ Route::get('admin', function(){
 	return view('admin/admin_template');
 });
 
+//route get api
+Route::get('getDataUser', 'HomeController@getDataUser')->name('getDataUser');
+
+//route sync data user
+Route::post('sinkronkanDataUser', 'HomeController@sinkronkanDataUser')->name('sinkronkanDataUser');
+
 Route::post('cekLogin', 'CekLoginController@index')->name('cekLogin');
 
 Route::get('cari', 'HomeController@cari')->name('cari');

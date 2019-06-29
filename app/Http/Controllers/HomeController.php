@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 use GH;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
+use App\Prodi;
+use App\Fakultas;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -252,7 +258,11 @@ class HomeController extends Controller
         }
     }
     public function sinkronisasi(){
-        return view('home.sinkronisasi');
+        $data = GH::getDataUserAPI();
+
+        $result = json_decode($data);
+
+        return view('home.sinkronisasi', ['datas'=>$result]);
     }
     public function getSinkronisasi(){
         $ldap_server = "ldaps://192.168.1.3:636";
@@ -271,40 +281,6 @@ class HomeController extends Controller
             if($ldap_bind){
                 $lastUID = GH::lastUID();
                 echo $lastUID;
-
-                //sorting berdasarkan tipe objek class
-
-                //aaa
-                // $result = ldap_search($ldap_conn, $ldap_dn, "(objectclass=posixAccount)");
-                // $data = ldap_get_entries($ldap_conn, $result);
-                //aaa
-                //sorting berdasarkan cn dan uidnumber low to high
-                // for ($i=0; $i<$data["count"]; $i++) {
-                //     if($data[$i]["dn"] == "cn=".$data[$i]["cn"][0].","."cn=moodleuser,dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id"){
-                //         echo "User: ". $data[$i]["uidnumber"][0] ."<br />";    
-                //         // dd($data);
-                //         array_push($uidnumber, $data[$i]["uidnumber"][0]);
-                //     }
-                // }
-                // $a = count($uidnumber)-1;
-                // sort($uidnumber);
-                // echo $a;
-                // dd($uidnumber[$a]);
-
-                // for ($i=0; $i<$data["count"]; $i++) {
-                //     array_push($uidnumber, $data[$i]["uidnumber"][0]);
-                    
-                //     // dd($data);
-                // }
-                // $a = count($uidnumber)-1;
-                // sort($uidnumber);
-
-
-                // echo $a;
-                // return $this->lastUID();
-                // dd($uidnumber[$a]);
-                
-
             }
         }
     }
@@ -355,5 +331,116 @@ class HomeController extends Controller
                 return $lastUID;
             }
         }
+    }
+
+    public function getDataUser(){
+        $data = GH::getDataUserAPI();
+
+        $result = json_decode($data);
+
+        echo $result[0]->username;
+        return $result;
+    }
+
+    public function sinkronkanDataUser(){
+
+        $ldap_server = "ldaps://192.168.1.3:636";
+        $ldap_dn = "cn=admin,dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id";
+        $ldap_password = "password";
+
+        $ldap_conn = ldap_connect($ldap_server);
+        ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+        $ldap_base = "dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id";
+
+        if(ldap_bind($ldap_conn, $ldap_dn, $ldap_password)){
+            $data = GH::getDataUserAPI();
+            $lastUID = GH::lastUID();
+            $x = json_decode($data);
+            $y = count($x);
+            for($i=0; $i<$y; $i++){
+                // echo $x[$i]->name;
+                $ldaprecord['cn'] = $x[$i]->username;
+                $ldaprecord['sn'] = $x[$i]->name;
+                $ldaprecord['uid'] = $x[$i]->nimnip;
+                $ldaprecord['objectclass'][0] = "top";
+                $ldaprecord['objectclass'][1] = "posixaccount";
+                $ldaprecord['objectclass'][2] = "inetOrgPerson";
+                $ldaprecord['loginshell'] = "/bin/sh";
+                $ldaprecord['homedirectory'] = "/home/".$x[$i]->username.$x[$i]->name;
+
+                $ldaprecord['uidnumber'] = $lastUID+$i;
+                $ldaprecord['gidnumber'] = $x[$i]->prodi;
+
+                $getEncryptPass = $x[$i]->pasd;
+                $plain = GH::decrypt($getEncryptPass);
+                // dd($plain);
+                $tampungPass = md5($plain);
+                $ldaprecord['userpassword'] = '{MD5}' . base64_encode(pack('H*',$tampungPass));
+                //ganti pakai db nanti
+                if($x[$i]->prodi){
+                    $getProdi = Prodi::find($x[$i]->prodi);
+                    $prodi = $getProdi->prodi;
+                    if($x[$i]->fakultas){
+                        $getFakultas = Fakultas::find($x[$i]->fakultas);
+                        $fakultas = $getFakultas->fakultas;
+                        $base_dn = "cn=".$ldaprecord['cn'].","."cn=".$prodi.","."cn=".$fakultas.","."cn=fakultas,".$ldap_base;
+
+                        // dd($base_dn);
+                        
+                        //print_r($ldaprecord);
+                        
+                        
+                        
+                    }    
+                }
+                print_r($ldaprecord);
+                $r = ldap_add($ldap_conn, $base_dn, $ldaprecord);
+                if($r){
+                    $flag = GH::setFlagSync();
+
+                    return redirect()->route('sinkronisasi')->with('success', 'Create user berhasil');
+                }
+
+            }    
+            
+        }
+        
+        
+        /////////
+        // $ldap_server = "ldaps://192.168.1.3:636";
+        // $ldap_dn = "cn=admin,dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id";
+        // $ldap_password = "password";
+
+        // $ldap_conn = ldap_connect($ldap_server);
+        // ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+        // $ldap_base = "dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id";
+        // $lastUID = GH::lastUID();
+        // if(ldap_bind($ldap_conn, $ldap_dn, $ldap_password)){
+            
+        //     $ldaprecord['cn'] = $request->get('CN');
+        //     $ldaprecord['sn'] = $request->get('SN');
+        //     $ldaprecord['uid'] = $request->get('uid');
+        //     $ldaprecord['objectclass'][0] = "top";
+        //     $ldaprecord['objectclass'][1] = "posixaccount";
+        //     $ldaprecord['objectclass'][2] = "inetOrgPerson";
+        //     $ldaprecord['loginshell'] = $request->get('loginShell');
+        //     $ldaprecord['homedirectory'] = "/home/".$ldaprecord['cn'].$ldaprecord['sn'];
+        //     $posix = $request->get('posixGroup');
+        //     if($posix == 'moodleuser'){
+        //         $ldaprecord['uidnumber'] = $lastUID+1;
+        //         $ldaprecord['gidnumber'] = 2000;
+        //     }
+        //     $tampungPass = md5($request->get('password'));
+        //     $ldaprecord['userpassword'] = '{MD5}' . base64_encode(pack('H*',$tampungPass));
+        //     $base_dn = "cn=".$ldaprecord['cn'].","."cn=".$posix.",".$ldap_base;
+        //     $r = ldap_add($ldap_conn, $base_dn, $ldaprecord);
+        //     return redirect()->route('home.create')->with('success', 'Create user berhasil');
+        // }
+        // else{
+        //     return redirect()->route('home.create')->with('error', 'Gagal membuat user');
+        //     ldap_close($ldap_conn);
+        //     echo "anuu";
+        // }
+    // }
     }
 }
