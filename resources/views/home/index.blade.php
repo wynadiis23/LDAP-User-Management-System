@@ -6,9 +6,11 @@
             <!-- Box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">@php echo "Server: "; echo $_GET['server']; @endphp</h3>
+                    <h3 class="box-title"></h3>
                     <br>
-                    <h1 class="box-title">@php echo "DN: "; echo $_GET['dn']; @endphp</h1>
+                    <h1 class="box-title">{{$ldap_data['ldap_server']}}</h1>
+                    <br>
+                    <h1 class="box-title">{{$ldap_data['ldap_dn']}}</h1>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>

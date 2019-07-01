@@ -24,7 +24,9 @@
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixGroup" /> -->
                         <label>Fakultas</label>
                         <select class="form-control input-sm" name="posixGroup">
-                        	<option>moodleuser</option>
+                            @foreach($prodi as $data)
+                        	<option value="{{$data->id}}">{{$data['prodi']}}</option>
+                            @endforeach
                         </select>
                         <label>Base DN</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="baseDN" value="dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id" disabled />

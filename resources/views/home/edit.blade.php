@@ -26,8 +26,10 @@
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixGroup" /> -->
                         <label>Fakultas</label>
                         <select class="form-control input-sm" name="posixGroup" disabled>
-                        	<option>moodleuser</option>
+                        	<option>{{$fakultas->fakultas}}</option>
                         </select>
+                        <label>Prodi</label>
+                        <input type='text' placeholder='prodi' class='form-control input-sm' name="prodi" value="{{$prodi}}" disabled />
                         <label>User DN</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="userDN" value="{{$hasil[$i]['dn']}}" disabled />
                         <input type='hidden' placeholder='uid' class='form-control input-sm' name="userDN" value="{{$hasil[$i]['dn']}}" />

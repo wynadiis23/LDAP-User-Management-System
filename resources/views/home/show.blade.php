@@ -11,11 +11,11 @@
 		{{$hasil[$i]["objectclass"][2]}}
 		
 	@endfor -->
-	@if ($message = Session::get('success'))
-<div class="alert alert-success alert-block">
-	<button type="button" class="close" data-dismiss="alert">×</button>	
-        <strong>{{ $message }}</strong>
-</div>
+@if(!empty($success))
+  <div class="alert alert-success"> 
+  	<button type="button" class="close" data-dismiss="alert">×</button>
+  	<strong>{{ $success }}</strong>
+  </div>
 @endif
         <div class='col-md-12'>
             <!-- Box -->

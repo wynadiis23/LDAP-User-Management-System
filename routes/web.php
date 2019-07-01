@@ -11,12 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth/login');
-});
-Route::get('login', function(){
-	return view('auth/login');
-});
+// Route::get('/', function () {
+//     return view('auth/login');
+// });
+// Route::get('login', function(){
+// 	return view('auth/login');
+// });
+///////////route auth///////////////////
+Route::get('/', 'CekLoginController@loginView')->name('login');
+Route::get('login', 'CekLoginController@loginView');
 
 //route get//
 Route::get('admin', function(){
@@ -31,6 +34,7 @@ Route::post('sinkronkanDataUser', 'HomeController@sinkronkanDataUser')->name('si
 
 Route::post('cekLogin', 'CekLoginController@index')->name('cekLogin');
 
+Route::get('test', 'HomeController@test')->name('test');
 Route::get('cari', 'HomeController@cari')->name('cari');
 Route::post('letscari', 'HomeController@letsCari')->name('letscari');
 Route::get('sinkronisasi', 'HomeController@sinkronisasi')->name('sinkronisasi');

@@ -38,21 +38,25 @@
       <form action="{{route ('cekLogin')}}" method="post" enctype="multipart/form-data">
         @csrf
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="ldap://x.x.x.x:389 or ldaps://x.x.x.x:636" name="server">
+        <input type="text" class="form-control" placeholder="ldap://x.x.x.x:389 or ldaps://x.x.x.x:636" name="server" value="{{$ldap_configuration['ldap_server']}}" disabled>
+        <input type="hidden" class="form-control" placeholder="ldap://x.x.x.x:389 or ldaps://x.x.x.x:636" name="server" value="{{$ldap_configuration['ldap_server']}}">
         <span class="glyphicon glyphicon-globe form-control-feedback"></span>
       </div>  
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="CN" name="cn">
+        <input type="text" class="form-control" placeholder="CN" name="cn" value="{{$ldap_configuration['ldap_user']}}">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" name="password">
+        <input type="password" class="form-control" placeholder="Password" name="password" value="{{$ldap_configuration['ldap_password']}}">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
         <!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+        </div>
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-success btn-block btn-flat">Add Server</button>
         </div>
         <!-- /.col -->
       </div>
