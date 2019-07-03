@@ -12,21 +12,8 @@
           <h3><i class="fa fa-warning text-red"></i> Oops! Something went wrong.</h3>
 
           <p>
-            We will work on fixing that right away.
-            Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+            Terjadi kesalah sistem, pastikan <strong>inputan</strong> dan <strong>kode</strong> anda benar. Cek <strong>config server</strong> dan <strong>API</strong> pada Helper. 
           </p>
-
-          <form class="search-form">
-            <div class="input-group">
-              <input type="text" name="search" class="form-control" placeholder="Search">
-
-              <div class="input-group-btn">
-                <button type="submit" name="submit" class="btn btn-danger btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.input-group -->
-          </form>
         </div>
       </div>
       <!-- /.error-page -->

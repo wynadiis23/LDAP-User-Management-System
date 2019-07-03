@@ -20,24 +20,12 @@ class CekLoginController extends Controller
 
     public function index(Request $request)
     {
-        $ldap_configuration = GH::config();
-        $ldap_server = $ldap_configuration['ldap_server'];
         $status = GH::loginToLdapServer();
         if($status == 1){
             return redirect()->route('home.index')->with('success', 'Bind Berhasil');
         }else{
             return redirect()->route('login')->with('error', 'Invalid Credentials');
         }
-
-
-        // $ldap_conn = ldap_connect($ldap_server);
-        // ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
-
-        // if(ldap_bind($ldap_conn, $ldap_dn, $ldap_password)){
-        //     return redirect()->route('home.index',['server'=>$ldap_server, 'dn'=>$ldap_dn])->with('success', 'Bind Berhasil');
-        // }else{
-        //     return view('auth.login');
-        // }
     }
 
     /**

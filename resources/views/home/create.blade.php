@@ -19,10 +19,10 @@
                     <form action="{{route ('home.store')}}" method="post" enctype="multipart/form-data">
                     	@csrf
                     	<label>NIM/NIP</label>
-                        <input type='text' placeholder='uid' class='form-control input-sm' name="uid" />
+                        <input type='text' placeholder='Inputkan NIM atau NIP' class='form-control input-sm' name="uid" />
                         <!-- <label>posixGroup</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixGroup" /> -->
-                        <label>Fakultas</label>
+                        <label>Prodi</label>
                         <select class="form-control input-sm" name="posixGroup">
                             @foreach($prodi as $data)
                         	<option value="{{$data->id}}">{{$data['prodi']}}</option>
@@ -31,9 +31,9 @@
                         <label>Base DN</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="baseDN" value="dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id" disabled />
                         <label>Username</label>
-                        <input type='text' placeholder='common name' class='form-control input-sm' name="CN" />
+                        <input type='text' placeholder='Inputkan Username' class='form-control input-sm' name="CN" />
                         <label>Nama Lengkap</label>
-                        <input type='text' placeholder='sur name' class='form-control input-sm' name="SN" />
+                        <input type='text' placeholder='Inputkan Nama Lengkap' class='form-control input-sm' name="SN" />
                         <label>Login Shell</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="loginShell" value="/bin/sh" disabled />
                         <input type='hidden' placeholder='uid' class='form-control input-sm' name="loginShell" value="/bin/sh" />

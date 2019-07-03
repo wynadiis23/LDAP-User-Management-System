@@ -15,9 +15,6 @@ class globalHelper{
             'ldap_password' => "password",
             'ldap_conn' => ldap_connect("ldaps://192.168.1.3:636/")
         ];
-
-        // $ldap_server = "ldaps://192.168.1.3:636";
-        // $ldap_dn = "dc=ldaps,dc=unud,dc=ac,dc=id";
         return $ldap_configuration;
     }
 
@@ -51,38 +48,29 @@ class globalHelper{
     }
 
 	public static function lastUID(){
-        // $ldap_server = "ldaps://192.168.1.3:636";
-        // $ldap_dn = "dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id";
-        // $ldap_user = "cn=admin,".$ldap_dn;
-        // $ldap_password = "password";
-
         $ldap_configuration = GH::config();
         $status = GH::loginToLdapServer();
-
-
         $uidnumber = [];
         $x = [];
-
-        // $ldap_conn = ldap_connect($ldap_server);
         ldap_set_option($ldap_configuration['ldap_conn'], LDAP_OPT_PROTOCOL_VERSION, 3);
         if($status == 1){
             $result = ldap_search($ldap_configuration['ldap_conn'], $ldap_configuration['ldap_dn'], "(objectclass=posixAccount)");
-                $data = ldap_get_entries($ldap_configuration['ldap_conn'], $result);
+            $data = ldap_get_entries($ldap_configuration['ldap_conn'], $result);
 
-                for ($i=0; $i<$data["count"]; $i++) {
-                    array_push($uidnumber, $data[$i]["uidnumber"][0]);
-                }
-                $c = count($uidnumber);
+            for ($i=0; $i<$data["count"]; $i++) {
+                array_push($uidnumber, $data[$i]["uidnumber"][0]);
+            }
+            $c = count($uidnumber);
+            $a = count($uidnumber)-1;
+            if($c <= 0){
+                $a = count($uidnumber);
+                $lastUID = 2000;
+            }else{
                 $a = count($uidnumber)-1;
-                if($c <= 0){
-                    $a = count($uidnumber);
-                    $lastUID = 2000;
-                }else{
-                    $a = count($uidnumber)-1;
-                    sort($uidnumber);
-                    $lastUID = $uidnumber[$a];
-                }
-                return $lastUID;
+                sort($uidnumber);
+                $lastUID = $uidnumber[$a];
+            }
+            return $lastUID;
         }else{
             return false;
         }
@@ -171,6 +159,23 @@ class globalHelper{
         }
     }
 
+    //////setingan active url
+
+
 }
+function set_active($uri, $output = ‘active’)
+    {
+     if( is_array($uri) ) {
+       foreach ($uri as $u) {
+         if (Route::is($u)) {
+           return $output;
+         }
+       }
+     } else {
+       if (Route::is($uri)){
+         return $output;
+       }
+     }
+    }
 
 ?>

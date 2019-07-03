@@ -37,7 +37,6 @@ class HomeController extends Controller
         //
         $lastUID = GH::lastUID()+1;
         $prodi = Prodi::all();
-        // dd($prodi);
         return view('home.create',['lastUID'=>$lastUID, 'prodi'=>$prodi]);
     }
 
@@ -50,13 +49,11 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $ldap_configuration = GH::config();
-        // $status = GH::loginToLdapServer();
         $ldap_conn = ldap_connect($ldap_configuration['ldap_server']);
         ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
         $lastUID = GH::lastUID();
         $ldap_bind = ldap_bind($ldap_conn, $ldap_configuration['ldap_user'],$ldap_configuration['ldap_password']);
         if($ldap_bind){
-            // dd($status);
             $ldaprecord['cn'] = $request->get('CN');
             $ldaprecord['sn'] = $request->get('SN');
             $ldaprecord['uid'] = $request->get('uid');
@@ -74,9 +71,7 @@ class HomeController extends Controller
             
             $tampungPass = md5($request->get('password'));
             $ldaprecord['userpassword'] = '{MD5}' . base64_encode(pack('H*',$tampungPass));
-            // dd($ldaprecord);
             $base_dn = "cn=".$ldaprecord['cn'].","."cn=".$prodi->prodi.","."cn=".$fakultas->fakultas.","."cn=fakultas,".$ldap_configuration['ldap_dn'];
-            // $r = ldap_add($ldap_configuration['ldap_conn'], $base_dn, $ldaprecord);
             $r = ldap_add($ldap_conn, $base_dn, $ldaprecord);
 
             return redirect()->route('home.create')->with('success', 'Create user berhasil');
@@ -84,7 +79,6 @@ class HomeController extends Controller
             else{
                 return redirect()->route('home.create')->with('error', 'Gagal membuat user');
                 ldap_close($ldap_conn);
-                echo "anuu";
             }
     }
             
@@ -236,8 +230,9 @@ class HomeController extends Controller
         ldap_set_option($ldap_configuration['ldap_conn'], LDAP_OPT_PROTOCOL_VERSION, 3);
         if($status == 1){
             $result = ldap_search($ldap_configuration['ldap_conn'], $ldap_configuration['ldap_dn'], "(cn=".$ldap_filter.")");
-                $data = ldap_get_entries($ldap_configuration['ldap_conn'], $result);
 
+                $data = ldap_get_entries($ldap_configuration['ldap_conn'], $result);
+                // dd($data);
             if($data['count'] == 0){
                 // return view('home.cari')->with('error','Data tidak ditemukan');
                 return redirect()->route('cari')->with('error', 'Data tidak ditemukan');

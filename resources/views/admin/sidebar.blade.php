@@ -9,7 +9,7 @@
           <img src="{{ asset("bower_components/admin-lte/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>Admin</p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -29,10 +29,10 @@
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
+        <li class="header">OPERATIONAL</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href="{{route ('home.create')}}"><i class="fa fa-plus"></i> <span>Tambah User</span></a></li>
+        <li class=""><a href="{{route ('home.index')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li class=""><a href="{{route ('home.create')}}"><i class="fa fa-plus"></i> <span>Tambah User</span></a></li>
         <li><a href="{{route ('cari')}}"><i class="fa fa-search"></i> <span>Cari User</span></a></li>
         <li><a href="{{route ('sinkronisasi')}}"><i class="fa fa-refresh"></i> <span>Sinkronisasi</span></a></li>
         <li><a href="{{route ('cari')}}"><i class="fa fa-info"></i> <span>Info Server</span></a></li>

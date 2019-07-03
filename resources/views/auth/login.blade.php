@@ -30,7 +30,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{ asset("../../index2.html") }}"><b>Admin</b>LTE</a>
+    <a href="{{ asset("../../index2.html") }}"><b>LUM</b> System</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -54,9 +54,6 @@
         <!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-        </div>
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-success btn-block btn-flat">Add Server</button>
         </div>
         <!-- /.col -->
       </div>
