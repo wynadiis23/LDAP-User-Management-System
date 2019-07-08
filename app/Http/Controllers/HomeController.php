@@ -23,7 +23,13 @@ class HomeController extends Controller
         //
         // $newServer = $server;
         $ldap_configuration = GH::config();
-        return view('home.index', ['ldap_data'=>$ldap_configuration]);
+
+        $data = GH::getAllUser();
+        $data = $data['count'];
+
+        $fakultas = Fakultas::all();
+        $jumFak = count($fakultas);
+        return view('home.index', ['ldap_data'=>$ldap_configuration, 'jumlah'=>$data, 'jumFak'=>$jumFak]);
     }
 
     /**
@@ -37,6 +43,7 @@ class HomeController extends Controller
         //
         $lastUID = GH::lastUID()+1;
         $prodi = Prodi::all();
+
         return view('home.create',['lastUID'=>$lastUID, 'prodi'=>$prodi]);
     }
 
