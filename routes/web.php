@@ -41,6 +41,8 @@ Route::get('sinkronisasi', 'HomeController@sinkronisasi')->name('sinkronisasi');
 Route::get('getSinkronisasi', 'HomeController@getSinkronisasi')->name('getSinkronisasi');
 
 
+route::get('getProdi', 'ProdiController@getProdi')->name('getProdi');
+
 //route resource//
 Route::resource('home', 'HomeController');
 Route::resource('prodi', 'ProdiController');

@@ -174,6 +174,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
     ],
 
@@ -226,6 +227,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'GH' => App\Helpers\globalHelper::class,
+        'Yanjra' => Yajra\Datatables\Facades\Datatables::class,
 
     ],
 

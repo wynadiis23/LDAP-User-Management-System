@@ -5,6 +5,7 @@
 <!-- AdminLTE App -->
 <script src="{{ asset("bower_components/admin-lte/dist/js/adminlte.min.js") }}"></script>
 
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->

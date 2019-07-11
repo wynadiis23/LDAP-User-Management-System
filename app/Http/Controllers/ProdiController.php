@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yanjra;
+use Illuminate\Support\Facades\DB;
 
 class ProdiController extends Controller
 {
@@ -81,5 +83,11 @@ class ProdiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getProdi(){
+        $prodi = DB::table('prodi')->select('*');
+        // dd($prodi);
+        return datatables()->of($prodi)->make(true);
     }
 }
