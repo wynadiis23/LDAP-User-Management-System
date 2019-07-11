@@ -35,6 +35,31 @@
         <li class=""><a href="{{route ('home.create')}}"><i class="fa fa-plus"></i> <span>Tambah User</span></a></li>
         <li><a href="{{route ('cari')}}"><i class="fa fa-search"></i> <span>Cari User</span></a></li>
         <li><a href="{{route ('sinkronisasi')}}"><i class="fa fa-refresh"></i> <span>Sinkronisasi</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Prodi</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{route ('prodi.index')}}">Daftar Prodi</a></li>
+            <li><a href="#">Tambah Prodi</a></li>
+            <li><a href="#">Edit Prodi</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Fakultas</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">Daftar Fakultas</a></li>
+            <li><a href="#">Tambah Fakultas</a></li>
+            <li><a href="#">Edit Fakultas</a></li>
+          </ul>
+        </li>
+        <li class="header">SERVER</li>
         <li><a href="{{route ('cari')}}"><i class="fa fa-info"></i> <span>Info Server</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
