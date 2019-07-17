@@ -25,7 +25,7 @@
                         <label>Prodi</label>
                         <select class="form-control input-sm" name="posixGroup">
                             @foreach($prodi as $data)
-                        	<option value="{{$data->id}}">{{$data['prodi']}}</option>
+                        	<option value="{{$data->prodi_id}}">{{$data['prodi_name']}}</option>
                             @endforeach
                         </select>
                         <label>Base DN</label>
@@ -34,6 +34,8 @@
                         <input type='text' placeholder='Inputkan Username' class='form-control input-sm' name="CN" />
                         <label>Nama Lengkap</label>
                         <input type='text' placeholder='Inputkan Nama Lengkap' class='form-control input-sm' name="SN" />
+                        <label>Email</label>
+                        <input type='email' placeholder='Inputkan Email' class='form-control input-sm' name="mail" />
                         <label>Login Shell</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="loginShell" value="/bin/sh" disabled />
                         <input type='hidden' placeholder='uid' class='form-control input-sm' name="loginShell" value="/bin/sh" />

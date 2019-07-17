@@ -64,6 +64,7 @@ class HomeController extends Controller
             $ldaprecord['cn'] = $request->get('CN');
             $ldaprecord['sn'] = $request->get('SN');
             $ldaprecord['uid'] = $request->get('uid');
+            $ldaprecord['mail'] = $request->get('mail');
             $ldaprecord['objectclass'][0] = "top";
             $ldaprecord['objectclass'][1] = "posixaccount";
             $ldaprecord['objectclass'][2] = "inetOrgPerson";
@@ -72,13 +73,13 @@ class HomeController extends Controller
 
             $posix = $request->get('posixGroup');
             $prodi = DB::table('prodi')->where('prodi_id', $posix)->first();
-            $fakultas = DB::table('fakultas')->where('fakultas_id', $prodi->kode)->first();
+            $fakultas = DB::table('fakultas')->where('fakultas_id', $prodi->fakultas_id)->first();
             $ldaprecord['uidnumber'] = $lastUID+1;
             $ldaprecord['gidnumber'] = $posix;
             
             $tampungPass = md5($request->get('password'));
             $ldaprecord['userpassword'] = '{MD5}' . base64_encode(pack('H*',$tampungPass));
-            $base_dn = "cn=".$ldaprecord['cn'].","."cn=".$prodi->prodi.","."cn=".$fakultas->fakultas.","."cn=fakultas,".$ldap_configuration['ldap_dn'];
+            $base_dn = "cn=".$ldaprecord['cn'].","."cn=".$prodi->prodi_name.","."cn=".$fakultas->fakultas_name.","."cn=fakultas,".$ldap_configuration['ldap_dn'];
             $r = ldap_add($ldap_conn, $base_dn, $ldaprecord);
 
             return redirect()->route('home.create')->with('success', 'Create user berhasil');
