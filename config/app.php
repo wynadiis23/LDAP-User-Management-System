@@ -227,7 +227,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'GH' => App\Helpers\globalHelper::class,
-        'Yanjra' => Yajra\Datatables\Facades\Datatables::class,
+        'Yajra' => Yajra\Datatables\Facades\Datatables::class,
 
     ],
 

@@ -43,8 +43,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{route ('prodi.index')}}">Daftar Prodi</a></li>
-            <li><a href="#">Tambah Prodi</a></li>
-            <li><a href="#">Edit Prodi</a></li>
+            <li><a href="{{route ('prodi.create')}}">Tambah Prodi</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -54,9 +53,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Daftar Fakultas</a></li>
-            <li><a href="#">Tambah Fakultas</a></li>
-            <li><a href="#">Edit Fakultas</a></li>
+            <li><a href="{{route ('fakultas.index')}}">Daftar Fakultas</a></li>
+            <li><a href="{{route ('fakultas.create')}}">Tambah Fakultas</a></li>
           </ul>
         </li>
         <li class="header">SERVER</li>

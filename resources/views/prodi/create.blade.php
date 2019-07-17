@@ -6,7 +6,7 @@
             <!-- Box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Tambah Fakultas</h3>
+                    <h3 class="box-title">Tambah Prodi</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -16,13 +16,18 @@
 
                 </div><!-- /.box-body -->
                 <div class="box-footer">
-                    <form action="{{route ('fakultas.store')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route ('prodi.store')}}" method="post" enctype="multipart/form-data">
                     	@csrf
-                    	<label>Fakultas</label>
-                        <input type='text' placeholder='Inputkan Fakultas' class='form-control input-sm' name="fakultas" required>
+                    	<label>Prodi</label>
+                        <input type='text' placeholder='Inputkan Prodi' class='form-control input-sm' name="prodi" required>
                         <!-- <label>posixGroup</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixGroup" /> -->
-                           
+                        <label>Fakultas</label>
+                        <select class="form-control input-sm" name="fakultas">
+                            @foreach($data as $fakultas)
+                            <option value="{{$fakultas->fakultas_id}}">{{$fakultas->fakultas_name}}</option>
+                            @endforeach
+                        </select>   
 						<br>
                         <input type="submit" value="save" class="btn btn-primary">
                     </form>
@@ -48,7 +53,6 @@
                         <b>Fakultas</b> sesuaikan dengan fakultas mahasiswa atau dosen/pegawai. <br>
                         
                     </p>
-                    Penulisan ID untuk fakultas dilanjut
                     
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
