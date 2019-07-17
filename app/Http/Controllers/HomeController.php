@@ -339,6 +339,7 @@ class HomeController extends Controller
                 $ldaprecord['cn'] = $x[$i]->username;
                 $ldaprecord['sn'] = $x[$i]->name;
                 $ldaprecord['uid'] = $x[$i]->nimnip;
+                $ldaprecord['mail'] = $x[$i]->email;
                 $ldaprecord['objectclass'][0] = "top";
                 $ldaprecord['objectclass'][1] = "posixaccount";
                 $ldaprecord['objectclass'][2] = "inetOrgPerson";
@@ -357,11 +358,13 @@ class HomeController extends Controller
                 if($x[$i]->prodi){
 
                     // $getProdi = Prodi::find($x[$i]->prodi);
-                    $getProdi = Prodi::find($x[$i]->prodi);
-                    $prodi = $getProdi->prodi;
+                    // $getProdi = Prodi::find($x[$i]->prodi);
+                    $getProdi = Prodi::where('prodi_id',$x[$i]->prodi)->first();
+                    $prodi = $getProdi->prodi_name;
                     if($x[$i]->fakultas){
-                        $getFakultas = Fakultas::find($x[$i]->fakultas);
-                        $fakultas = $getFakultas->fakultas;
+                        // $getFakultas = Fakultas::find($x[$i]->fakultas);
+                        $getFakultas = Fakultas::where('fakultas_id',$x[$i]->fakultas)->first();
+                        $fakultas = $getFakultas->fakultas_name;
                         $base_dn = "cn=".$ldaprecord['cn'].","."cn=".$prodi.","."cn=".$fakultas.","."cn=fakultas,".$ldap_configuration['ldap_dn'];
                         echo $base_dn;
                     }    

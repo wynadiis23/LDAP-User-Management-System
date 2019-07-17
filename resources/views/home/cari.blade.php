@@ -64,6 +64,7 @@
                                 <th><b>CN</b></th>
                                 <th><b>SN</b></th>
                                 <th><b>UID</b></th>
+                                <th><b>Email</b></th>
                                 <th><b>Object Class</b></th>
                                 <th><b>Object Class</b></th>
                                 <th><b>Object Class</b></th>
@@ -80,6 +81,7 @@
                                 <td>{{$data[$i]["cn"][0]}}</td>
                                 <td>{{$data[$i]["sn"][0]}}</td>
                                 <td>{{$data[$i]["uid"][0]}}</td>
+                                <td>{{$data[$i]["mail"][0]}}</td>
                                 <td>{{$data[$i]["objectclass"][0]}}</td>
                                 <td>{{$data[$i]["objectclass"][1]}}</td>
                                 <td>{{$data[$i]["objectclass"][2]}}</td>
