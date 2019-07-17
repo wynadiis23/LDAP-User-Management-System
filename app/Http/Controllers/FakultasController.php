@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Fakultas;
-
+use Illuminate\Support\Facades\DB;
 class FakultasController extends Controller
 {
     /**
@@ -60,6 +60,7 @@ class FakultasController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -71,6 +72,8 @@ class FakultasController extends Controller
     public function edit($id)
     {
         //
+        $query = DB::table('fakultas')->where('fakultas_id',$id)->first();
+        return view('fakultas.edit', ['fakultas'=>$query]);
     }
 
     /**

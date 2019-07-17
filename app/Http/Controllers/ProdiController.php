@@ -108,8 +108,8 @@ class ProdiController extends Controller
     {
         //
         $a = 11;
-        dd($a);
-        return view('prodi.edit');
+        $query = DB::table('prodi')->select('*')->where('prodi_id', $id)->first();
+        return view('prodi.edit', ['prodi'=>$query]);
     }
 
     /**

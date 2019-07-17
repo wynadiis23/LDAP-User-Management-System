@@ -71,8 +71,8 @@ class HomeController extends Controller
             $ldaprecord['homedirectory'] = "/home/".$ldaprecord['cn'].$ldaprecord['sn'];
 
             $posix = $request->get('posixGroup');
-            $prodi = DB::table('prodi')->where('id', $posix)->first();
-            $fakultas = DB::table('fakultas')->where('id', $prodi->kode)->first();
+            $prodi = DB::table('prodi')->where('prodi_id', $posix)->first();
+            $fakultas = DB::table('fakultas')->where('fakultas_id', $prodi->kode)->first();
             $ldaprecord['uidnumber'] = $lastUID+1;
             $ldaprecord['gidnumber'] = $posix;
             
@@ -150,9 +150,9 @@ class HomeController extends Controller
             $result = ldap_search($ldap_configuration['ldap_conn'], $ldap_configuration['ldap_dn'], "(cn=".$id.")");
             $data = ldap_get_entries($ldap_configuration['ldap_conn'], $result);
             // dd($data);
-            $getFakultas = DB::table('prodi')->where('id', $data[0]['gidnumber'][0])->first();
-            $fakultas = DB::table('fakultas')->where('id', $getFakultas->kode)->first();
-            $prodi = $getFakultas->prodi;
+            $getFakultas = DB::table('prodi')->where('prodi_id', $data[0]['gidnumber'][0])->first();
+            $fakultas = DB::table('fakultas')->where('fakultas_id', $getFakultas->fakultas_id)->first();
+            $prodi = $getFakultas->prodi_name;
 
             return view('home.edit', ['hasil'=>$data, 'fakultas'=>$fakultas, 'prodi'=>$prodi]);
         }

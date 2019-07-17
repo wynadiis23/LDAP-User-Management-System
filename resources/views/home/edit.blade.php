@@ -26,7 +26,7 @@
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixGroup" /> -->
                         <label>Fakultas</label>
                         <select class="form-control input-sm" name="posixGroup" disabled>
-                        	<option>{{$fakultas->fakultas}}</option>
+                        	<option>{{$fakultas->fakultas_name}}</option>
                         </select>
                         <label>Prodi</label>
                         <input type='text' placeholder='prodi' class='form-control input-sm' name="prodi" value="{{$prodi}}" disabled />
