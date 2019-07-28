@@ -7,6 +7,7 @@ use Yajra;
 use Illuminate\Support\Facades\DB;
 use App\Prodi;
 use App\Fakultas;
+use GH;
 
 class ProdiController extends Controller
 {
@@ -46,6 +47,7 @@ class ProdiController extends Controller
         // $idProdi = DB::table('prodi')
         //     ->select('prodi_id')->where('fakultas_id', $fakultas)->get();
         $idProdi = Prodi::where('fakultas_id', $fakultas)->get();
+        $getFakultas = Fakultas::where('fakultas_id', $fakultas)->first();
         // dd($idProdi);
         $a = "mamamng";
         // dd($a);
@@ -74,8 +76,31 @@ class ProdiController extends Controller
            // user found
             return redirect()->route('prodi.create')->with('error', 'Tambah prodi gagal, prodi sudah ada');
         }else{
-            $prodi->save();            
-            return redirect()->route('prodi.create')->with('success', 'Tambah prodi berhasil');
+            $ldap_configuration = GH::config();
+            $ldap_conn = ldap_connect($ldap_configuration['ldap_server']);
+            ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+
+            $ldap_bind = ldap_bind($ldap_conn, $ldap_configuration['ldap_user'],$ldap_configuration['ldap_password']);
+            if($ldap_bind){
+                // dd($getFakultas->fakultas_name);
+                $prodirecord['cn'] = $prodi->prodi_name;
+                $prodirecord['objectclass'][0] = 'posixgroup';
+                $prodirecord['objectclass'][1] = 'top';
+                $prodirecord['gidnumber'] = $prodi->prodi_id;
+                
+                $prodi_dn = "cn=".$getFakultas->fakultas_name.","."cn=fakultas".",".$ldap_configuration['ldap_dn'];
+                $base_dn = "cn=".$prodirecord['cn'].",".$prodi_dn;
+                // dd($base_dn);
+                $r = ldap_add($ldap_conn, $base_dn, $prodirecord);
+
+                if($r){
+                    $prodi->save();            
+                    return redirect()->route('prodi.create')->with('success', 'Create prodi berhasil');
+                }
+                    return redirect()->route('prodi.create')->with('error', 'Tambah prodi gagal');
+                // dd($base_dn);
+            }
+            //$prodi->save();            
         }    
         
 
@@ -83,7 +108,7 @@ class ProdiController extends Controller
         // if($prodi->save()){
             
         // }else{
-        //     return redirect()->route('prodi.create')->with('error', 'Tambah prodi gagal');
+        
         // }
     }
 
@@ -133,12 +158,36 @@ class ProdiController extends Controller
     public function destroy($id)
     {
         //
+        $ldap_configuration = GH::config();
+        $status = GH::loginToLdapServer();
 
-        echo $id;
-        $prodi = Prodi::where('prodi_id', $id);
-        $prodi->delete();
+        $ldap_conn = ldap_connect($ldap_configuration['ldap_server']);
+        ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+        $ldap_bind = ldap_bind($ldap_conn, $ldap_configuration['ldap_user'], $ldap_configuration['ldap_password']);
+        
+        //ganti base dn pencarian
+        $cari_base_dn = "cn=fakultas,".$ldap_configuration['ldap_dn'];
+        
+        //mencari cn dari prodi yang dihapus
+        $getProdi = Prodi::where('prodi_id', $id)->first();
+        $ldap_filter = $getProdi->prodi_name;
+        // dd($ldap_filter);
+        if($status == 1){
 
-        return redirect()->route('prodi.index')->with('success', 'Hapus prodi berhasil');
+            $result = ldap_search($ldap_configuration['ldap_conn'], $ldap_configuration['ldap_dn'], "(cn=".$ldap_filter.")");
+            $data = ldap_get_entries($ldap_configuration['ldap_conn'], $result);
+            for($i = 0; $i<$data["count"]; $i++){
+                $ldap_user_dn = $data[$i]["dn"];
+            }
+            // dd($ldap_user_dn);
+            //hapus di ldapserver
+            ldap_delete($ldap_conn, $ldap_user_dn);
+
+            //hapus diDB
+            $prodi = Prodi::where('prodi_id', $id);
+            $prodi->delete();
+            return redirect()->route('prodi.index')->with('success', 'User berhasil dihapus');
+        }
 
     }
 
