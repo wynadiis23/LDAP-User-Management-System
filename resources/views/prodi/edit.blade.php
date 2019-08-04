@@ -20,7 +20,7 @@
                     	@csrf
                     	<input type="hidden" value="PUT" name="_method">
                     	<label>Prodi</label>
-                        <input type='text' placeholder='uid' class='form-control input-sm' name="uid" value="{{$prodi->prodi_name}}"/>
+                        <input type='text' placeholder='prodi' class='form-control input-sm' name="prodi" value="{{$prodi->prodi_name}}"/>
                         <!-- <label>posixGroup</label>
                         <input type='text' placeholder='uid' class='form-control input-sm' name="posixGroup" /> -->
                         
