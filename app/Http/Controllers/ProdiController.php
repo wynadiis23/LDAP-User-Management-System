@@ -146,42 +146,49 @@ class ProdiController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $ldap_configuration = GH::config();
-        $status = GH::loginToLdapServer();
-        $ldap_conn = ldap_connect($ldap_configuration['ldap_server']);
-        ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
-        if($status == 1)
+        if (Prodi::where('prodi_name', '=', $request->get('prodi'))->count() > 0) {
+           // user found
+            return redirect()->route('prodi.index')->with('error', 'Edit prodi gagal, prodi sudah ada');
+        }
+        else
         {
-            $ldap_bind = ldap_bind($ldap_conn, $ldap_configuration['ldap_user'], $ldap_configuration['ldap_password']);
-            if($ldap_bind)
+            $ldap_configuration = GH::config();
+            $status = GH::loginToLdapServer();
+            $ldap_conn = ldap_connect($ldap_configuration['ldap_server']);
+            ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+            if($status == 1)
             {
-                $prodiupdates['cn'] = $request->get('prodi');
-                
-                //get DN
-                //$ldap_updates_dn = "cn=fakultas".",".$ldap_configuration['ldap_dn'];
-                $getNewProdi = $request->get('prodi');
-                $getProdi = Prodi::where('prodi_id', $id)->first();
-                $getFakultas = Fakultas::where('fakultas_id', $getProdi->fakultas_id)->first();
-                $ldap_user_dn_old = "cn=".$getProdi->prodi_name.","."cn=".$getFakultas->fakultas_name.","."cn=fakultas,".$ldap_configuration['ldap_dn'];
-                $ldap_user_dn_update = "cn=".$getNewProdi;
-                // dd($getFakultas);
-                // dd($getProdi);
-                // dd($ldap_user_dn_update);
-                // dd($ldap_user_dn_old);
-                $result = ldap_rename($ldap_conn, $ldap_user_dn_old, $ldap_user_dn_update, NULL, TRUE);
-                // $result = ldap_mod_replace($ldap_conn, $ldap_user_dn_update, $prodiupdates);
-                if($result)
+                $ldap_bind = ldap_bind($ldap_conn, $ldap_configuration['ldap_user'], $ldap_configuration['ldap_password']);
+                if($ldap_bind)
                 {
-                    echo "baerhasil";
-                    Prodi::where('prodi_id', $id)
-                        ->update(['prodi_name'=> $request->get('prodi')]);
-                    return redirect()->route('prodi.index')->with('success', 'Data prodi berhasil diupdate');
+                    // $prodiupdates['cn'] = $request->get('prodi');
+                    
+                    //get DN
+                    //$ldap_updates_dn = "cn=fakultas".",".$ldap_configuration['ldap_dn'];
+                    $getNewProdi = $request->get('prodi');
+                    $getProdi = Prodi::where('prodi_id', $id)->first();
+                    $getFakultas = Fakultas::where('fakultas_id', $getProdi->fakultas_id)->first();
+                    $ldap_user_dn_old = "cn=".$getProdi->prodi_name.","."cn=".$getFakultas->fakultas_name.","."cn=fakultas,".$ldap_configuration['ldap_dn'];
+                    $ldap_user_dn_update = "cn=".$getNewProdi;
+                    // dd($getFakultas);
+                    // dd($getProdi);
+                    // dd($ldap_user_dn_update);
+                    // dd($ldap_user_dn_old);
+                    $result = ldap_rename($ldap_conn, $ldap_user_dn_old, $ldap_user_dn_update, NULL, TRUE);
+                    // $result = ldap_mod_replace($ldap_conn, $ldap_user_dn_update, $prodiupdates);
+                    if($result)
+                    {
+                        echo "baerhasil";
+                        Prodi::where('prodi_id', $id)
+                            ->update(['prodi_name'=> $getNewProdi]);
+                        return redirect()->route('prodi.index')->with('success', 'Data prodi berhasil diupdate');
+                    }
+                    else
+                    {
+                        echo "aaaaa";
+                    }
                 }
-                else
-                {
-                    echo "aaaaa";
-                }
-            }
+            }    
         }
     }
 
@@ -236,13 +243,15 @@ class ProdiController extends Controller
             ->addColumn('action', function($data){
                 return "
                     <a href=".route('prodi.edit',$data->prodi_id)." class='btn btn-info btn-sm'>Edit</a>
-                    <form action=".route('prodi.destroy',$data->prodi_id)." class='d-inline' onsubmit=return confirm(Hapus User?) method=POST>
-                        ".csrf_field()."
-                        <input type='hidden' name='_method' value='DELETE'>
-                        <input type='submit' value='Hapus' class='btn btn-danger btn-xsm'>
-                    </form>
+                    
                 ";
             })
             ->make(true);
     }
+
+    // <form action=".route('prodi.destroy',$data->prodi_id)." class='d-inline' onsubmit=return confirm(Hapus User?) method=POST>
+    //                     ".csrf_field()."
+    //                     <input type='hidden' name='_method' value='DELETE'>
+    //                     <input type='submit' value='Hapus' class='btn btn-danger btn-xsm'>
+    //                 </form>
 }

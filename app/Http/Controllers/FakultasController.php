@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Fakultas;
 use Illuminate\Support\Facades\DB;
+use GH;
 
 class FakultasController extends Controller
 {
@@ -40,11 +41,50 @@ class FakultasController extends Controller
     public function store(Request $request)
     {
         //
+        $getAll = Fakultas::all();
+        $x = count($getAll);
+        $newID = $getAll[$x-1]->fakultas_id + 1;
+        // dd($getAll[$x-1]->fakultas_id);
+        // dd($newID);
         $fakultas = new Fakultas;
         $fakultas->fakultas_name = $request->get('fakultas');
+        $fakultas->fakultas_id = $newID;
 
-        $fakultas->save();
+        if (Fakultas::where('fakultas_name', '=', $request->get('fakultas'))->count() > 0) {
+           // user found
+            return redirect()->route('fakultas.create')->with('error', 'Tambah fakultas gagal, fakultas sudah ada');
+        }
+        else{
+            $ldap_configuration = GH::config();
+            $ldap_conn = ldap_connect($ldap_configuration['ldap_server']);
+            ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
 
+            $ldap_bind = ldap_bind($ldap_conn, $ldap_configuration['ldap_user'],$ldap_configuration['ldap_password']);
+            if($ldap_bind)
+            {
+                $gidnumber = $newID.'00';
+                // dd($gidnumber);
+                $fakultasrecord['cn'] = $fakultas->fakultas_name;
+                $fakultasrecord['objectclass'][0] = 'posixgroup';
+                $fakultasrecord['objectclass'][1] = 'top';
+                $fakultasrecord['gidnumber'] = $gidnumber;
+
+                $base_dn = "cn=".$fakultas->fakultas_name.","."cn=fakultas".",".$ldap_configuration['ldap_dn'];
+                // dd($base_dn);
+
+                $r = ldap_add($ldap_conn, $base_dn, $fakultasrecord);
+
+                if($r)
+                {
+                    $fakultas->save();
+                    return redirect()->route('fakultas.create')->with('success', 'Fakultas berhasil ditambahkan');
+                }
+                else
+                {
+                    return redirect()->route('fakultas.create')->with('error', 'Fakultas gagal ditambahkan');   
+                }
+            }
+        }
         if($fakultas->save()){
             return redirect()->route('fakultas.create')->with('success', 'Tambah Fakultas Berhasil!!');
         }else{
@@ -87,6 +127,42 @@ class FakultasController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if (Fakultas::where('fakultas_name', '=', $request->get('fakultas'))->count() > 0) {
+           // user found
+            return redirect()->route('fakultas.index')->with('error', 'Edit fakultas gagal, fakultas sudah ada');
+        }
+        else
+        {
+            $ldap_configuration = GH::config();
+            $status = GH::loginToLdapServer();
+            $ldap_conn = ldap_connect($ldap_configuration['ldap_server']);
+            ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+            if($status == 1)
+            {
+                $ldap_bind = ldap_bind($ldap_conn, $ldap_configuration['ldap_user'], $ldap_configuration['ldap_password']);
+                if($ldap_bind)
+                {
+                    $getNewFakultas = $request->get('fakultas');
+                    $getFakultas = Fakultas::where('fakultas_id', $id)->first();
+                    $ldap_fakultas_dn_old = "cn=".$getFakultas->fakultas_name.","."cn=fakultas".",".$ldap_configuration['ldap_dn'];
+                    $ldap_fakultas_dn_update = "cn=".$getNewFakultas;
+
+                    $result = ldap_rename($ldap_conn, $ldap_fakultas_dn_old, $ldap_fakultas_dn_update, NULL, TRUE);
+                    if($result)
+                    {
+                        Fakultas::where('fakultas_id', $id)
+                            ->update(['fakultas_name'=>$getNewFakultas]);
+                        return redirect()->route('fakultas.index')->with('success', 'Data fakultas berhasil diupdate');
+                    }
+                    else
+                    {
+                        return redirect()->route('fakultas.index')->with('error', 'Data fakultas gagal diupdate');
+                    }
+                }
+
+            }    
+        }
+        
     }
 
     /**
@@ -128,4 +204,6 @@ class FakultasController extends Controller
             })
             ->make(true);
     }
+
+
 }
