@@ -195,15 +195,15 @@ class FakultasController extends Controller
             ->addColumn('action', function($data){
                 return "
                     <a href=".route('fakultas.edit',$data->fakultas_id)." class='btn btn-info btn-sm'>Edit</a>
-                    <form action=".route('fakultas.destroy',$data->fakultas_id)." class='d-inline' onsubmit=return confirm(Hapus User?) method=POST>
-                        ".csrf_field()."
-                        <input type='hidden' name='_method' value='DELETE'>
-                        <input type='submit' value='Hapus' class='btn btn-danger btn-xsm'>
-                    </form>
+                    
                 ";
             })
             ->make(true);
     }
-
+// <form action=".route('fakultas.destroy',$data->fakultas_id)." class='d-inline' onsubmit=return confirm(Hapus User?) method=POST>
+//                         ".csrf_field()."
+//                         <input type='hidden' name='_method' value='DELETE'>
+//                         <input type='submit' value='Hapus' class='btn btn-danger btn-xsm'>
+//                     </form>
 
 }
