@@ -370,11 +370,23 @@ class HomeController extends Controller
                     }    
                 }
                 print_r($ldaprecord);
-                $r = ldap_add($ldap_conn, $base_dn, $ldaprecord);
-                if($r){
-                    $flag = GH::setFlagSync();
+
+                //validate agar tidak double akun
+                $result = ldap_search($ldap_configuration['ldap_conn'], $ldap_configuration['ldap_dn'], "(cn=".$ldaprecord['cn'].")");
+
+                $data = ldap_get_entries($ldap_configuration['ldap_conn'], $result);
+                // dd($data);
+                if($data['count'] == 0){
+                    // return view('home.cari')->with('error','Data tidak ditemukan');
+                    $r = ldap_add($ldap_conn, $base_dn, $ldaprecord);
+                    if($r){
+                        $flag = GH::setFlagSync();
+                    }else{
+                        return redirect()->route('sinkronisasi')->with('error', 'Terjadi kesalahan');            
+                    }
+                    return redirect()->route('sinkronisasi')->with('success', 'Sinkronisasi user berhasil');
                 }else{
-                    return redirect()->route('sinkronisasi')->with('error', 'Terjadi kesalahan');            
+                    return redirect()->route('sinkronisasi')->with('error', 'Data akun '.$ldaprecord['cn'].' sudah ada!');
                 }
             }
         }
