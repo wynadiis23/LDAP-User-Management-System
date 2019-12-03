@@ -46,9 +46,9 @@
         </div><!-- /.col -->
 
     </div><!-- /.row -->
-    <div class="row">
+    <!-- <div class="row">
         <div class='col-md-12'>
-            <!-- Box -->
+            
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Second Box</h3>
@@ -99,8 +99,8 @@
                     A separate section to add any kind of widget. Feel free
                     to explore all of AdminLTE widgets by visiting the demo page
                     on <a href="https://almsaeedstudio.com">Almsaeed Studio</a>.
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        </div><!-- /.col -->
-    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
 @endsection('content')
