@@ -36,6 +36,7 @@ Route::post('cekLogin', 'CekLoginController@index')->name('cekLogin');
 
 Route::get('test', 'HomeController@test')->name('test');
 Route::get('cari', 'HomeController@cari')->name('cari');
+Route::get('infoserver', 'HomeController@infoserver')->name('infoserver');
 Route::post('letscari', 'HomeController@letsCari')->name('letscari');
 Route::get('sinkronisasi', 'HomeController@sinkronisasi')->name('sinkronisasi');
 Route::get('getSinkronisasi', 'HomeController@getSinkronisasi')->name('getSinkronisasi');

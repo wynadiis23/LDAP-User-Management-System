@@ -243,7 +243,7 @@ class HomeController extends Controller
                 // dd($data);
             if($data['count'] == 0){
                 // return view('home.cari')->with('error','Data tidak ditemukan');
-                return redirect()->route('cari')->with('error', 'Data tidak ditemukan');
+                return redirect()->route('cari')->with('error', 'Data '.$ldap_filter.' tidak ditemukan');
             }else{
                 return view('home.show',['hasil'=>$data]);    
             }
@@ -396,5 +396,9 @@ class HomeController extends Controller
 
     public function test(){
         GH::loginToLdapServer();
+    }
+
+    public function infoserver(){
+        return view('home.info');
     }
 }

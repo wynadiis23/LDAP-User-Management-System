@@ -58,7 +58,7 @@
           </ul>
         </li>
         <li class="header">SERVER</li>
-        <li><a href="{{route ('cari')}}"><i class="fa fa-info"></i> <span>Info Server</span></a></li>
+        <li><a href="{{route ('infoserver')}}"><i class="fa fa-info"></i> <span>Info Server</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">
