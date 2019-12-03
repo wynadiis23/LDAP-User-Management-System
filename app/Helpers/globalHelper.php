@@ -9,11 +9,13 @@ class globalHelper{
     public static function config(){
         //server config
         $ldap_configuration = [
-            'ldap_server' => "ldaps://192.168.1.3:636/",
+            // 'ldap_server' => "ldaps://192.168.1.3:636/",
+            'ldap_server' => "ldaps://172.16.160.126:636/",
             'ldap_dn' => "dc=ldaps,dc=unud,dc=ac,dc=id",
             'ldap_user' => "cn=admin,dc=ldaps,dc=unud,dc=ac,dc=id",
             'ldap_password' => "password",
-            'ldap_conn' => ldap_connect("ldaps://192.168.1.3:636/")
+            // 'ldap_conn' => ldap_connect("ldaps://192.168.1.3:636/")
+            'ldap_conn' => ldap_connect("ldaps://172.16.160.126:636/")
         ];
         return $ldap_configuration;
     }
