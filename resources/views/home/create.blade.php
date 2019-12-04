@@ -13,10 +13,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-
-                </div><!-- /.box-body -->
-                <div class="box-footer">
-                    <form action="{{route ('home.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route ('home.store')}}" method="post" enctype="multipart/form-data">
                     	@csrf
                     	<label>NIM/NIP</label>
                         <input type='text' placeholder='Inputkan NIM atau NIP' class='form-control input-sm' name="uid" />
@@ -29,9 +26,9 @@
                             @endforeach
                         </select>
                         <label>Base DN</label>
-                        <input type='text' placeholder='uid' class='form-control input-sm' name="baseDN" value="dc=ldaps,dc=cs,dc=unud,dc=ac,dc=id" disabled />
-                        <label>Username</label>
-                        <input type='text' placeholder='Inputkan Username' class='form-control input-sm' name="CN" />
+                        <input type='text' placeholder='uid' class='form-control input-sm' name="baseDN" value="dc=ldaps,dc=unud,dc=ac,dc=id" disabled />
+                        <!-- <label>Username</label>
+                        <input type='text' placeholder='Inputkan Username' class='form-control input-sm' name="CN" /> -->
                         <label>Nama Lengkap</label>
                         <input type='text' placeholder='Inputkan Nama Lengkap' class='form-control input-sm' name="SN" />
                         <label>Email</label>
@@ -59,6 +56,9 @@
 						<br>
                         <input type="submit" value="save" class="btn btn-primary">
                     </form>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    
                 </div><!-- /.box-footer-->
             </div><!-- /.box -->
         </div><!-- /.col -->
@@ -66,22 +66,24 @@
             <!-- Box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Second Box</h3>
+                    <h3 class="box-title">Informasi Form</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
                 <div class="box-body">
-                    A separate section to add any kind of widget. Feel free
-                    to explore all of AdminLTE widgets by visiting the demo page
-                    on <a href="https://almsaeedstudio.com">Almsaeed Studio</a>.
-                    <p>
-                        <b>NIM/NIP</b> isikan sesuai dengan NIM mahasiswa atau NIP Dosen/Pegawai. <br>
-                        <b>Fakultas</b> sesuaikan dengan fakultas mahasiswa atau dosen/pegawai. <br>
-                        
-                    </p>
-                    
+                    <label for="">NIM/NIP</label>
+                    <span>Sesuaikan dengan NIM/NIP Mahasiswa atau Dosen. Data <b>NIM/NIP</b> akan digunakan sebagai parameter untuk <b>Login</b> pada LMS Moodle</span>
+                    <br>
+                    <label for="">Prodi</label>
+                    <span>Sesuaikan dengan data Mahasiswa atau Dosen</span>
+                    <br>
+                    <label for="">Nama Lengkap</label>
+                    <span>Isikan sesuai dengan data Mahasiswa atau Dosen</span>
+                    <br>
+                    <label for="">Email</label>
+                    <span>Isikan dengan alamat email aktif</span>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->

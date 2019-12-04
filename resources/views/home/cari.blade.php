@@ -11,19 +11,16 @@
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
                     </div>
-                    <br>
-                    <br>
                 </div>
                 <div class="box-body">
-
-                </div><!-- /.box-body -->
-                <div class="box-footer">
                     <form action="{{route ('letscari')}}" method="post" enctype="multipart/form-data">
                     	@csrf
-                        <input type='text' placeholder='Cari user' class='form-control input-sm' name="filter" />
+                        <input type='text' placeholder='Inputkan NIM/NIP User' class='form-control input-sm' name="filter" />
                         <br>
                         <input type="submit" name="cari" value="Cari" class="btn btn-primary">
                     </form>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
                 </div><!-- /.box-footer-->
             </div><!-- /.box -->
         </div><!-- /.col -->
@@ -31,7 +28,7 @@
             <!-- Box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Second Box</h3>
+                    <h3 class="box-title">Informasi Halaman</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
