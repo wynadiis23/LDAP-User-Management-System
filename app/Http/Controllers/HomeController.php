@@ -23,13 +23,17 @@ class HomeController extends Controller
         //
         // $newServer = $server;
         $ldap_configuration = GH::config();
+        $api_configuration = GH::apiConfig();
 
         $data = GH::getAllUser();
         $data = $data['count'];
 
         $fakultas = Fakultas::all();
         $jumFak = count($fakultas);
-        return view('home.index', ['ldap_data'=>$ldap_configuration, 'jumlah'=>$data, 'jumFak'=>$jumFak]);
+
+        $prodi = Prodi::all();
+        $jumProd = count($prodi);
+        return view('home.index', ['ldap_data'=>$ldap_configuration, 'api_data'=>$api_configuration, 'jumlah'=>$data, 'jumFak'=>$jumFak, 'jumProd'=>$jumProd]);
     }
 
     /**
@@ -61,7 +65,7 @@ class HomeController extends Controller
         $lastUID = GH::lastUID();
         $ldap_bind = ldap_bind($ldap_conn, $ldap_configuration['ldap_user'],$ldap_configuration['ldap_password']);
         if($ldap_bind){
-            $ldaprecord['cn'] = $request->get('CN');
+            $ldaprecord['cn'] = $request->get('uid');
             $ldaprecord['sn'] = $request->get('SN');
             $ldaprecord['uid'] = $request->get('uid');
             $ldaprecord['mail'] = $request->get('mail');
