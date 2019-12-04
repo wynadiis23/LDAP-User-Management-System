@@ -1,5 +1,9 @@
 @extends('admin.admin_template')
 
+@section("title")
+    Dashboard
+@endsection
+
 @section('content')
     <div class='row'>
         <div class="col-lg-3 col-xs-6">

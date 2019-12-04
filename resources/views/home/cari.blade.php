@@ -1,5 +1,9 @@
 @extends('admin.admin_template')
 
+@section("title")
+    Cari User
+@endsection
+
 @section('content')
 	<div class='row'>
         <div class='col-md-6'>
@@ -35,9 +39,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    A separate section to add any kind of widget. Feel free
-                    to explore all of AdminLTE widgets by visiting the demo page
-                    on <a href="https://almsaeedstudio.com">Almsaeed Studio</a>.
+                    Form pencaharian akan menampilkan data user terkait. <b>Edit dan Hapus</b> data user bisa dilakukan pada halaman ini.
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->

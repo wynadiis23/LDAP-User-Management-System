@@ -1,21 +1,22 @@
 @extends('admin.admin_template')
 
+@section("title")
+    Edit Fakultas
+@endsection
+
 @section('content')
 	<div class='row'>
         <div class='col-md-6'>
             <!-- Box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Edit Use aar</h3>
+                    <h3 class="box-title">Edit Fakultas</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
                 <div class="box-body">
-
-                </div><!-- /.box-body -->
-                <div class="box-footer">
                     <form action="{{route ('fakultas.update', ['id'=>$fakultas->fakultas_id])}}" method="post" enctype="multipart/form-data">
                     	@csrf
                     	<input type="hidden" value="PUT" name="_method">
@@ -27,6 +28,8 @@
 						<br>
                         <input type="submit" value="update" class="btn btn-primary">
                     </form>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
                 </div><!-- /.box-footer-->
             </div><!-- /.box -->
         </div><!-- /.col -->

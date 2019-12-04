@@ -1,5 +1,9 @@
 @extends('admin.admin_template')
 
+@section("title")
+    Tambah User
+@endsection
+
 @section('content')
 	<div class='row'>
         <div class='col-md-6'>

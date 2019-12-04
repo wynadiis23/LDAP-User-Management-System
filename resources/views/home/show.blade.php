@@ -1,5 +1,9 @@
 @extends('admin.admin_template')
 
+@section("title")
+    Cari User
+@endsection
+
 @section('content')<!-- 
 	@php var_dump($hasil["count"]); @endphp
 	@for($i = 0; $i<$hasil["count"]; $i++)

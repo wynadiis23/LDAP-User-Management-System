@@ -1,5 +1,9 @@
 @extends('admin.admin_template')
 
+@section("title")
+    Sinkronisasi
+@endsection
+
 @section('content')
 	<div class='row'>
         <div class='col-md-12'>
@@ -13,11 +17,8 @@
                         <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                
                 <div class="box-body">
-                    
                     <table class="table table-bordered" id="table">
-                        
                         <thead>
                             <tr>
                                 <th><b>NIM/NIP</b></th>
@@ -49,9 +50,6 @@
                 </div><!-- /.box-body -->
                 
                 <div class="box-footer">
-                    <br>
-
-
                     <form action="{{route('sinkronkanDataUser')}}" onsubmit="return confirm('Tambahkan data user ke server LDAP?')" method="POST">
                         @csrf
 
