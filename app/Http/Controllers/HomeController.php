@@ -403,6 +403,8 @@ class HomeController extends Controller
     }
 
     public function infoserver(){
-        return view('home.info');
+        $ldap_configuration = GH::config();
+        $api_configuration = GH::apiConfig();
+        return view('home.info', ['ldap_data'=>$ldap_configuration, 'api_data'=>$api_configuration]);
     }
 }
