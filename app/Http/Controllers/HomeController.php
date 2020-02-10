@@ -234,6 +234,22 @@ class HomeController extends Controller
         return "view('home.cari')";
         
     }
+
+    // public function carijs(){
+    //     // $prodi = DB::table('prodi')->select('*');
+    //     $query = GH::getAllUser();
+    //     // dd($prodi);
+    //     // return datatables()->of($prodi)->make(true);
+    //     return datatables()->of($query)
+    //         ->addColumn('action', function($data){
+    //             return "
+    //                 <a href=".route('fakultas.edit',$data->fakultas_id)." class='btn btn-info btn-sm'>Edit</a>
+                    
+    //             ";
+    //         })
+    //         ->make(true);
+    // }
+
     public function letsCari(Request $request){
         // 
         $ldap_configuration = GH::config();
@@ -335,64 +351,81 @@ class HomeController extends Controller
             // dd($lastUID);
             $x = json_decode($data);
             $y = count($x);
-            if($y == 0){
+            if($y == 0)
+            {
                 return redirect()->route('sinkronisasi')->with('error', 'Tidak dapat mensinkronisasi, tidak ada data');
-            }else{
-                for($i=0; $i<$y; $i++){
-                // echo $x[$i]->name;
-                $ldaprecord['cn'] = $x[$i]->username;
-                $ldaprecord['sn'] = $x[$i]->name;
-                $ldaprecord['uid'] = $x[$i]->nimnip;
-                $ldaprecord['mail'] = $x[$i]->email;
-                $ldaprecord['objectclass'][0] = "top";
-                $ldaprecord['objectclass'][1] = "posixaccount";
-                $ldaprecord['objectclass'][2] = "inetOrgPerson";
-                $ldaprecord['loginshell'] = "/bin/sh";
-                $ldaprecord['homedirectory'] = "/home/".$x[$i]->username.$x[$i]->name;
-
-                $ldaprecord['uidnumber'] = $lastUID+$i;
-                $ldaprecord['gidnumber'] = $x[$i]->prodi;
-
-                $getEncryptPass = $x[$i]->pasd;
-                $plain = GH::decrypt($getEncryptPass);
-                // dd($plain);
-                $tampungPass = md5($plain);
-                $ldaprecord['userpassword'] = '{MD5}' . base64_encode(pack('H*',$tampungPass));
-                //ganti pakai db nanti
-                if($x[$i]->prodi){
-
-                    // $getProdi = Prodi::find($x[$i]->prodi);
-                    // $getProdi = Prodi::find($x[$i]->prodi);
-                    $getProdi = Prodi::where('prodi_id',$x[$i]->prodi)->first();
-                    $prodi = $getProdi->prodi_name;
-                    if($x[$i]->fakultas){
-                        // $getFakultas = Fakultas::find($x[$i]->fakultas);
-                        $getFakultas = Fakultas::where('fakultas_id',$x[$i]->fakultas)->first();
-                        $fakultas = $getFakultas->fakultas_name;
-                        $base_dn = "cn=".$ldaprecord['cn'].","."cn=".$prodi.","."cn=".$fakultas.","."cn=fakultas,".$ldap_configuration['ldap_dn'];
-                        echo $base_dn;
-                    }    
-                }
-                print_r($ldaprecord);
-
-                //validate agar tidak double akun
-                $result = ldap_search($ldap_configuration['ldap_conn'], $ldap_configuration['ldap_dn'], "(cn=".$ldaprecord['cn'].")");
-
-                $data = ldap_get_entries($ldap_configuration['ldap_conn'], $result);
-                // dd($data);
-                if($data['count'] == 0){
-                    // return view('home.cari')->with('error','Data tidak ditemukan');
-                    $r = ldap_add($ldap_conn, $base_dn, $ldaprecord);
-                    if($r){
-                        $flag = GH::setFlagSync();
-                    }else{
-                        return redirect()->route('sinkronisasi')->with('error', 'Terjadi kesalahan');            
-                    }
-                    return redirect()->route('sinkronisasi')->with('success', 'Sinkronisasi user berhasil');
-                }else{
-                    return redirect()->route('sinkronisasi')->with('error', 'Data akun '.$ldaprecord['cn'].' sudah ada!');
-                }
             }
+            else
+            {
+                for($i=0; $i<$y; $i++)
+                {
+                    // $ldap_configuration = GH::config();
+                    // $ldap_conn = ldap_connect($ldap_configuration['ldap_server']);
+                    // ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+                    // ldap_bind($ldap_conn, $ldap_configuration['ldap_user'], $ldap_configuration['ldap_password'])
+                     // echo $x[$i]->name;
+                    $ldaprecord[$i]['cn'] = $x[$i]->username;
+                    $ldaprecord[$i]['sn'] = $x[$i]->name;
+                    $ldaprecord[$i]['uid'] = $x[$i]->nimnip;
+                    $ldaprecord[$i]['mail'] = $x[$i]->email;
+                    $ldaprecord[$i]['objectclass'][0] = "top";
+                    $ldaprecord[$i]['objectclass'][1] = "posixaccount";
+                    $ldaprecord[$i]['objectclass'][2] = "inetOrgPerson";
+                    $ldaprecord[$i]['loginshell'] = "/bin/sh";
+                    $ldaprecord[$i]['homedirectory'] = "/home/".$x[$i]->username.$x[$i]->name;
+
+                    $ldaprecord[$i]['uidnumber'] = $lastUID+$i;
+                    $ldaprecord[$i]['gidnumber'] = $x[$i]->prodi;
+
+                    $getEncryptPass = $x[$i]->pasd;
+                    $plain = GH::decrypt($getEncryptPass);
+                    // dd($plain);
+                    $tampungPass = md5($plain);
+                    $ldaprecord[$i]['userpassword'] = '{MD5}' . base64_encode(pack('H*',$tampungPass));
+                    //ganti pakai db nanti
+                    if($x[$i]->prodi)
+                    {
+
+                        // $getProdi = Prodi::find($x[$i]->prodi);
+                        // $getProdi = Prodi::find($x[$i]->prodi);
+                        $getProdi = Prodi::where('prodi_id',$x[$i]->prodi)->first();
+                        $prodi = $getProdi->prodi_name;
+                        if($x[$i]->fakultas)
+                        {
+                            // $getFakultas = Fakultas::find($x[$i]->fakultas);
+                            $getFakultas = Fakultas::where('fakultas_id',$x[$i]->fakultas)->first();
+                            $fakultas = $getFakultas->fakultas_name;
+                            $base_dn = "cn=".$ldaprecord[$i]['cn'].","."cn=".$prodi.","."cn=".$fakultas.","."cn=fakultas,".$ldap_configuration['ldap_dn'];
+                            echo $base_dn;
+                        }    
+                    }
+                    print_r($ldaprecord[$i]);
+                    // dd($i);
+
+                    //validate agar tidak double akun
+                    $result = ldap_search($ldap_configuration['ldap_conn'], $ldap_configuration['ldap_dn'], "(cn=".$ldaprecord[$i]['cn'].")");
+
+                    $data = ldap_get_entries($ldap_configuration['ldap_conn'], $result);
+                    // dd($data);
+                    if($data['count'] == 0){
+                        // return view('home.cari')->with('error','Data tidak ditemukan');
+                        $r = ldap_add($ldap_conn, $base_dn, $ldaprecord[$i]);
+                        // dd($i);
+                        if($r)
+                        {
+                            $flag = GH::setFlagSync();
+                        }
+                        else
+                        {
+                            return redirect()->route('sinkronisasi')->with('error', 'Terjadi kesalahan');            
+                        }
+                        // return redirect()->route('sinkronisasi')->with('success', 'Sinkronisasi user berhasil');
+                        echo $i;
+                    }else{
+                        return redirect()->route('sinkronisasi')->with('error', 'Data akun '.$ldaprecord[$i]['cn'].' sudah ada!');
+                    }
+                }
+                return redirect()->route('sinkronisasi')->with('success', 'Sinkronisasi user berhasil');
         }
         return redirect()->route('sinkronisasi')->with('success', 'Sinkronisasi user berhasil');
         }        

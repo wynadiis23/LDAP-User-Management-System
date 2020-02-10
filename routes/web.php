@@ -26,6 +26,7 @@ Route::get('admin', function(){
 	return view('admin/admin_template');
 });
 
+//route get data 
 //route get api
 Route::get('getDataUser', 'HomeController@getDataUser')->name('getDataUser');
 
@@ -36,6 +37,7 @@ Route::post('cekLogin', 'CekLoginController@index')->name('cekLogin');
 
 Route::get('test', 'HomeController@test')->name('test');
 Route::get('cari', 'HomeController@cari')->name('cari');
+Route::get('carijs', 'HomeController@carijs')->name('carijs');
 Route::get('infoserver', 'HomeController@infoserver')->name('infoserver');
 Route::post('letscari', 'HomeController@letsCari')->name('letscari');
 Route::get('sinkronisasi', 'HomeController@sinkronisasi')->name('sinkronisasi');

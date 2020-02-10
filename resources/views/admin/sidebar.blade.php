@@ -26,6 +26,7 @@
         <li class=""><a href="{{route ('home.index')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li class=""><a href="{{route ('home.create')}}"><i class="fa fa-plus"></i> <span>Tambah User</span></a></li>
         <li><a href="{{route ('cari')}}"><i class="fa fa-search"></i> <span>Cari User</span></a></li>
+        <!-- <li><a href="{{route ('cari')}}"><i class="fa fa-search"></i> <span>Cari User JS</span></a></li> -->
         <li><a href="{{route ('sinkronisasi')}}"><i class="fa fa-refresh"></i> <span>Sinkronisasi</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Prodi</span>
